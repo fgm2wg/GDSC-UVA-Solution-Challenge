@@ -6,13 +6,12 @@
     <title>Community Food Sharing Platform</title>
     <link rel="stylesheet" href="../static/styles.css">
     <script>
-        // Function to remove flash messages after a delay
         document.addEventListener('DOMContentLoaded', function () {
             var flashMessages = document.querySelectorAll('.flash-message');
             flashMessages.forEach(function (message) {
                 setTimeout(function () {
                     message.style.display = 'none';
-                }, 3000); // Change 3000 to the desired number of milliseconds (e.g., 3000 = 3 seconds)
+                }, 3000);
             });
         });
     </script>
