@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Food Sharing Platform</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <script>
+        // Function to remove flash messages after a delay
+        document.addEventListener('DOMContentLoaded', function () {
+            var flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function (message) {
+                setTimeout(function () {
+                    message.style.display = 'none';
+                }, 3000); // Change 3000 to the desired number of milliseconds (e.g., 3000 = 3 seconds)
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <header>
+        <h1>Community Food Sharing Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <!-- Change the following lines to display user profile/username if logged in -->
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Flash messages section -->
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <section class="left-column">
+            <h2>Available Donations</h2>
+            <ul>
+                {% for donation in donations %}
+                    <li>
+                        {{ donation.donor }} is offering {{ donation.food_item }} in {{ donation.location }}
+                        {% if current_user.is_authenticated and donation.submitter_username == current_user.username %}
+                            (<a href="{{ url_for('edit_donation', donation_id=donation.id) }}">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_donation', donation_id=donation.id) }}" method="post"><button type="submit" style="background-color: transparent; border: none; color: red; cursor: pointer;">Delete</button></form>)
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Donation form (only shown when user is authenticated) -->
+            {% if current_user.is_authenticated %}
+            <div class="form-section">
+                <h2>Donate Food</h2>
+                <form action="{{ url_for('donate') }}" method="post">
+                    <input type="hidden" id="donor" name="donor" value="{{ current_user.username }}">
+                    <label for="food_item">Food Item:</label>
+                    <input type="text" id="food_item" name="food_item" required><br>
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required><br>
+                    <button type="submit">Submit Donation</button>
+                </form>
+            </div>
+            {% endif %}
+        </section>
+
+        <section class="right-column">
+            <h2>Requests</h2>
+            <ul>
+                {% for request in requests %}
+                    <li>
+                        {{ request.requested_item }} needed in {{ request.location }}
+                        <div class="edit-delete">
+                            {% if current_user.is_authenticated and request.submitter_username == current_user.username %}
+                                (<a href="{{ url_for('edit_request', request_id=request.id) }}">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_request', request_id=request.id) }}" method="post"><button type="submit" style="background-color: transparent; border: none; color: red; cursor: pointer;">Delete</button></form>)
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Request form (only shown when user is authenticated) -->
+            {% if current_user.is_authenticated %}
+            <div class="form-section">
+                <h2>Request Food</h2>
+                <form action="{{ url_for('request_food') }}" method="post">
+                    <label for="requested_item">Food Item:</label>
+                    <input type="text" id="requested_item" name="requested_item" required><br>
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required><br>
+                    <button type="submit">Submit Request</button>
+                </form>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Prompt to sign up or log in (only shown when user is not authenticated) -->
+    {% if not current_user.is_authenticated %}
+    <div class="form-section" style="text-align: center;">
+        <p>Please <a href="{{ url_for('signup') }}">sign up</a> or <a href="{{ url_for('login') }}">log in</a> to submit donations or requests.</p>
+    </div>
+    {% endif %}
+</body>
+</html>
