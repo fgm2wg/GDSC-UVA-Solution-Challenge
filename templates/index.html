@@ -18,13 +18,11 @@
     </script>
 </head>
 <body>
-    <!-- Navigation bar -->
     <header>
         <h1>Community Food Sharing Platform</h1>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
-                <!-- Change the following lines to display user profile/username if logged in -->
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
@@ -35,7 +33,6 @@
         </nav>
     </header>
 
-    <!-- Flash messages section -->
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -48,7 +45,6 @@
         {% endwith %}
     </div>
 
-    <!-- Main content -->
     <div class="container">
         <section class="left-column">
             <h2>Available Donations</h2>
@@ -63,7 +59,6 @@
                 {% endfor %}
             </ul>
 
-            <!-- Donation form (only shown when user is authenticated) -->
             {% if current_user.is_authenticated %}
             <div class="form-section">
                 <h2>Donate Food</h2>
@@ -94,7 +89,6 @@
                 {% endfor %}
             </ul>
 
-            <!-- Request form (only shown when user is authenticated) -->
             {% if current_user.is_authenticated %}
             <div class="form-section">
                 <h2>Request Food</h2>
@@ -110,7 +104,6 @@
         </section>
     </div>
 
-    <!-- Prompt to sign up or log in (only shown when user is not authenticated) -->
     {% if not current_user.is_authenticated %}
     <div class="form-section" style="text-align: center;">
         <p>Please <a href="{{ url_for('signup') }}">sign up</a> or <a href="{{ url_for('login') }}">log in</a> to submit donations or requests.</p>
