@@ -1,9 +1,13 @@
 ﻿# GDSC-UVA-Solution-Challenge
 
 ## Before Running
-  * ```{python}
-    pip install requirements.txt
-    ```
+```{python}
+pip install requirements.txt
+```
+or
+```{python}
+python -m pip install -r requirements.txt
+```
 
 ## To Run
   * Run app.py (must be running to use the website)
