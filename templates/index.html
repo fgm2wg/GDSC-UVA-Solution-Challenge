@@ -17,15 +17,15 @@
     </script>
 </head>
 <body>
-    <header>
+    <header class="header">
         <h1>Community Food Sharing Platform</h1>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="messages">Messages</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('signup') }}">Signup</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                 {% endif %}
             </ul>
@@ -47,12 +47,12 @@
     <div class="container">
         <section class="left-column">
             <h2>Available Donations</h2>
-            <ul>
+            <ul class="donations-list">
                 {% for donation in donations %}
                     <li>
                         {{ donation.donor }} is offering {{ donation.food_item }} in {{ donation.location }}
                         {% if current_user.is_authenticated and donation.submitter_username == current_user.username %}
-                            (<a href="{{ url_for('edit_donation', donation_id=donation.id) }}">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_donation', donation_id=donation.id) }}" method="post"><button type="submit" style="background-color: transparent; border: none; color: red; cursor: pointer;">Delete</button></form>)
+                            (<a href="{{ url_for('edit_donation', donation_id=donation.id) }}" class="edit-button">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_donation', donation_id=donation.id) }}" method="post"><button type="submit" class="delete-button">Delete</button></form>)
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -67,21 +67,38 @@
                     <input type="text" id="food_item" name="food_item" required><br>
                     <label for="location">Location:</label>
                     <input type="text" id="location" name="location" required><br>
-                    <button type="submit">Submit Donation</button>
+                    <button type="submit" class="submit-button">Submit Donation</button>
                 </form>
             </div>
+
+            
+            <div class="chat-toggle" onclick="toggleChat()">Chat</div>
+
+            
+            <section class="chat-section" id="chat-section">
+                <h2>Chat</h2>
+                <div class="chat-form">
+                    <form action="{{ url_for('send_message') }}" method="post">
+                        <label for="recipient_username">Recipient Username:</label>
+                        <input type="text" id="recipient_username" name="recipient_username" required><br>
+                        <label for="content" style="margin-top: 10px;">Message:</label> 
+                        <textarea id="content" name="content" required style="margin-top: 10px;"></textarea><br> 
+                        <button type="submit" class="send-button">Send</button> 
+                    </form>
+                </div>
+            </section>
             {% endif %}
         </section>
 
         <section class="right-column">
             <h2>Requests</h2>
-            <ul>
+            <ul class="requests-list">
                 {% for request in requests %}
                     <li>
                         {{ request.requested_item }} needed in {{ request.location }}
                         <div class="edit-delete">
                             {% if current_user.is_authenticated and request.submitter_username == current_user.username %}
-                                (<a href="{{ url_for('edit_request', request_id=request.id) }}">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_request', request_id=request.id) }}" method="post"><button type="submit" style="background-color: transparent; border: none; color: red; cursor: pointer;">Delete</button></form>)
+                                (<a href="{{ url_for('edit_request', request_id=request.id) }}" class="edit-button">Edit</a> | <form style="display: inline;" action="{{ url_for('delete_request', request_id=request.id) }}" method="post"><button type="submit" class="delete-button">Delete</button></form>)
                             {% endif %}
                         </div>
                     </li>
@@ -96,7 +113,7 @@
                     <input type="text" id="requested_item" name="requested_item" required><br>
                     <label for="location">Location:</label>
                     <input type="text" id="location" name="location" required><br>
-                    <button type="submit">Submit Request</button>
+                    <button type="submit" class="submit-button">Submit Request</button>
                 </form>
             </div>
             {% endif %}
@@ -105,8 +122,15 @@
 
     {% if not current_user.is_authenticated %}
     <div class="form-section" style="text-align: center;">
-        <p>Please <a href="{{ url_for('signup') }}">sign up</a> or <a href="{{ url_for('login') }}">log in</a> to submit donations or requests.</p>
+        <p>Please <a href="{{ url_for('signup') }}">Sign Up</a> or <a href="{{ url_for('login') }}">Log In</a> to submit donations or requests.</p>
     </div>
     {% endif %}
+
+    <script>
+        function toggleChat() {
+            var chatSection = document.getElementById('chat-section');
+            chatSection.style.display = chatSection.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>

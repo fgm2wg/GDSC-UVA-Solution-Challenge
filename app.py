@@ -1,15 +1,19 @@
+import flask_login
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.exc import IntegrityError
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
+from os import urandom
+from datetime import datetime
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG_TB_ENABLED'] = False
 app.config['SESSION_PROTECTION'] = 'strong'
+app.config['PERMANENT_SESSION_LIFETIME'] = 604800
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
@@ -18,6 +22,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    received_messages = db.relationship('Message', backref='recipient', lazy=True, foreign_keys='Message.recipient_id')
+    sent_messages = db.relationship('Message', backref='sender', lazy=True, foreign_keys='Message.sender_id')
 
 class Donation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +37,13 @@ class Request(db.Model):
     requested_item = db.Column(db.String(100))
     location = db.Column(db.String(100))
     submitter_username = db.Column(db.String(100))
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 with app.app_context():
     db.create_all()
@@ -63,7 +76,7 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
-            login_user(user)
+            login_user(user, remember=True)
             flash('Successfully logged in!', 'success')
             return redirect(url_for('index'))
         else:
@@ -140,6 +153,32 @@ def delete_request(request_id):
     db.session.delete(request_item)
     db.session.commit()
     flash('Request deleted successfully!', 'success')
+    return redirect(url_for('index'))
+
+@app.route('/messages')
+@flask_login.login_required
+def messages():
+    received_messages = current_user.received_messages
+    sent_messages = current_user.sent_messages
+    return render_template('messages.html', received_messages=received_messages, sent_messages=sent_messages)
+
+
+@app.route('/send_message', methods=['POST'])
+@flask_login.login_required
+def send_message():
+    recipient_username = request.form['recipient_username']
+    recipient = User.query.filter_by(username=recipient_username).first()
+    if recipient and recipient != current_user:
+        content = request.form['content']
+        message = Message(sender_id=current_user.id, recipient_id=recipient.id, content=content)
+        db.session.add(message)
+        db.session.commit()
+        flash('Message sent successfully!', 'success')
+        return redirect(url_for('messages'))
+    elif recipient == current_user:
+        flash('You cannot send a message to yourself.', 'error')
+    else:
+        flash('Recipient not found', 'error')
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

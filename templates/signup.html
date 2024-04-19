@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    <link rel="stylesheet" href="../static/signup_styles.css">
 </head>
 <body>
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -16,13 +17,13 @@
         {% endif %}
     {% endwith %}
 
-    <h1>Signup</h1>
+    <h1>Sign Up</h1>
     <form action="{{ url_for('signup') }}" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <input type="text" id="username" name="username" required>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Signup</button>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Sign Up</button>
     </form>
 </body>
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="../static/messages_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Messages</h1>
+        <a href="{{ url_for('index') }}">Home</a>
+    </header>
+
+    <div class="container">
+        <section class="column">
+            <h2>Received Messages</h2>
+            <ul>
+                {% for message in received_messages %}
+                    <li><span class="meta-info">(From: {{ message.sender.username }})</span> {{ message.content }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="column">
+            <h2>Sent Messages</h2>
+            <ul>
+                {% for message in sent_messages %}
+                    <li><span class="meta-info">(To: {{ message.recipient.username }})</span> {{ message.content }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

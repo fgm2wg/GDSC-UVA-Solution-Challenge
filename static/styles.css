@@ -2,50 +2,186 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    overflow-y: auto;
+    background-color: #f8f9fa;
 }
-header {
-    background-color: #333;
+
+.header {
+    background-color: #343a40;
     color: white;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+.header a {
+    color: white;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
+
 nav ul li {
     display: inline;
     margin-right: 20px;
 }
+
 .container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
+    margin-bottom: 100px;
 }
+
 .left-column, .right-column {
     width: 45%;
 }
-.form-section {
-    margin-top: 20px;
+
+.form-section input[type="text"],
+.form-section textarea {
+    width: 50%;
+    padding: 5px;
+    margin: 5px 5px; 
+    box-sizing: border-box;
+    font-size: 16px;
 }
+
 .flash-message {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
 }
+
 .success {
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: white;
 }
+
 .error {
-    background-color: #f44336;
+    background-color: #dc3545;
     color: white;
 }
+
 .edit-delete {
     display: inline;
+    vertical-align: center;
     margin-left: 1px;
+    height: 15px;
+}
+
+.chat-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 150px;
+    height: 50px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-toggle:hover {
+    background-color: #0056b3;
+}
+
+.chat-section {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 350px;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 999;
+    overflow-y: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-section h2 {
+    margin-top: 0;
+    margin-bottom: 15px; 
+}
+
+.chat-form label {
+    vertical-align: top; 
+    display: inline-block; 
+    margin-top: 8px; 
+}
+
+.chat-form input[type="text"] {
+    margin-top: 5px; 
+}
+
+.chat-form textarea {
+    margin-top: 5px; 
+}
+
+.chat-form button {
+    margin-top: 5px; 
+}
+
+.donations-list,
+.requests-list {
+    margin-bottom: 50px;
+    padding-left: 0;
+}
+
+.donations-list li,
+.requests-list li {
+    margin-bottom: 10px; 
+    line-height: 1.5;
+}
+
+.submit-button {
+    background-color: #0063ff; 
+    color: white; 
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.send-button {
+    background-color: #0063ff; 
+    color: white; 
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-button {
+    background-color: #1ab41b; 
+    color: white; 
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.delete-button {
+    background-color: #dc3545; 
+    color: white; 
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
 }
