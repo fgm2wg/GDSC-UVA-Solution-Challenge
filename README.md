@@ -1,9 +1,9 @@
 ﻿# GDSC-UVA-Solution-Challenge
 
 ## Before Running
-  * pip install flask (or python -m pip install flask)
-  * pip install flask-sqlalchemy (or python -m pip install flask-sqlalchemy)
-  * pip install flask-login (or python -m pip install flask-login)
+  * ```{python}
+    pip install requirements.txt
+    ```
 
 ## To Run
   * Run app.py (must be running to use the website)
