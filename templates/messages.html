@@ -24,18 +24,26 @@
         <section class="left-column message-box">
             <h2>Received Messages</h2>
             <ul>
-                {% for message in received_messages %}
-                    <li><span class="meta-info">(From: {{ message.sender.username }})</span> {{ message.content }}</li>
-                {% endfor %}
+                {% if received_messages %}
+                    {% for message in received_messages %}
+                        <li><span class="meta-info">(From: {{ message.sender.username }})</span> {{ message.content }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No received messages available.</li>
+                {% endif %}
             </ul>
         </section>
 
         <section class="right-column message-box">
             <h2>Sent Messages</h2>
             <ul>
-                {% for message in sent_messages %}
-                    <li><span class="meta-info">(To: {{ message.recipient.username }})</span> {{ message.content }}</li>
-                {% endfor %}
+                {% if sent_messages %}
+                    {% for message in sent_messages %}
+                        <li><span class="meta-info">(To: {{ message.recipient.username }})</span> {{ message.content }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No sent messages available.</li>
+                {% endif %}
             </ul>
         </section>
     </div>

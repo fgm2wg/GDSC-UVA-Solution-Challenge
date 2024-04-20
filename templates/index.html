@@ -60,30 +60,34 @@
         <section class="left-column format-box">
             <h2>Available Donations</h2>
             <ul class="format-list">
-                {% for donation in donations %}
-                    <li>
-                        {{ donation.donor }} is offering {{ donation.food_item }} in {{ donation.location }}
-                        {% if current_user.is_authenticated and donation.submitter_username == current_user.username %}
-                        <div class="side-box">
-                            [<a href="{{ url_for('edit_donation', donation_id=donation.id) }}"><img src="../static/icons/edit_icon.png" alt="Edit Icon" title="Edit" class="edit-icon"></a> | <form style="display: inline;" action="{{ url_for('delete_donation', donation_id=donation.id) }}" method="post"><button type="submit" class="delete-button" style="background: none; border: none; padding: 0; margin: 0;"><img src="../static/icons/delete_icon.png" alt="Delete Icon" title="Delete" class="delete-icon"></button></form>]
-                        </div>
-                        {% endif %}
-                    </li>
-                {% endfor %}
+                {% if donations %}
+                    {% for donation in donations %}
+                        <li>
+                            {{ donation.donor }} is offering {{ donation.food_item }} in {{ donation.location }}
+                            {% if current_user.is_authenticated and donation.submitter_username == current_user.username %}
+                                <div class="side-box">
+                                    [<a href="{{ url_for('edit_donation', donation_id=donation.id) }}"><img src="../static/icons/edit_icon.png" alt="Edit Icon" title="Edit" class="edit-icon"></a> | <form style="display: inline;" action="{{ url_for('delete_donation', donation_id=donation.id) }}" method="post"><button type="submit" class="delete-button" style="background: none; border: none; padding: 0; margin: 0;"><img src="../static/icons/delete_icon.png" alt="Delete Icon" title="Delete" class="delete-icon"></button></form>]
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>No current donations available.</li>
+                {% endif %}
             </ul>
 
             {% if current_user.is_authenticated %}
-            <div class="form-section">
-                <h2>Donate Food</h2>
-                <form action="{{ url_for('donate') }}" method="post">
-                    <input type="hidden" id="donor" name="donor" value="{{ current_user.username }}">
-                    <label for="food_item">Food Item:</label>
-                    <input type="text" id="food_item" name="food_item" required><br>
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" name="location" required><br>
-                    <button type="submit" class="submit-button">Submit Donation</button>
-                </form>
-            </div>
+                <div class="form-section">
+                    <h2>Donate Food</h2>
+                    <form action="{{ url_for('donate') }}" method="post">
+                        <input type="hidden" id="donor" name="donor" value="{{ current_user.username }}">
+                        <label for="food_item">Food Item:</label>
+                        <input type="text" id="food_item" name="food_item" required><br>
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" required><br>
+                        <button type="submit" class="submit-button">Submit Donation</button>
+                    </form>
+                </div>
             {% endif %}
 
             <div class="chat-toggle" onclick="toggleChat()">Chat</div>
@@ -105,37 +109,41 @@
         <section class="right-column format-box">
             <h2>Requests</h2>
             <ul class="format-list">
-                {% for request in requests %}
-                    <li>
-                        {{ request.requested_item }} needed in {{ request.location }}
-                        {% if current_user.is_authenticated and request.submitter_username == current_user.username %}
-                        <div class="side-box">
-                            [<a href="{{ url_for('edit_request', request_id=request.id) }}"><img src="../static/icons/edit_icon.png" alt="Edit Icon" title="Edit" class="edit-icon"></a> | <form style="display: inline;" action="{{ url_for('delete_request', request_id=request.id) }}" method="post"><button type="submit" class="delete-button" style="background: none; border: none; padding: 0; margin: 0;"><img src="../static/icons/delete_icon.png" alt="Delete Icon" title="Delete" class="delete-icon"></button></form>]
-                        </div>
-                        {% endif %}
-                    </li>
-                {% endfor %}
+                {% if requests %}
+                    {% for request in requests %}
+                        <li>
+                            {{ request.requested_item }} needed in {{ request.location }}
+                            {% if current_user.is_authenticated and request.submitter_username == current_user.username %}
+                                <div class="side-box">
+                                    [<a href="{{ url_for('edit_request', request_id=request.id) }}"><img src="../static/icons/edit_icon.png" alt="Edit Icon" title="Edit" class="edit-icon"></a> | <form style="display: inline;" action="{{ url_for('delete_request', request_id=request.id) }}" method="post"><button type="submit" class="delete-button" style="background: none; border: none; padding: 0; margin: 0;"><img src="../static/icons/delete_icon.png" alt="Delete Icon" title="Delete" class="delete-icon"></button></form>]
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>No current requests available.</li>
+                {% endif %}
             </ul>
 
             {% if current_user.is_authenticated %}
-            <div class="form-section">
-                <h2>Request Food</h2>
-                <form action="{{ url_for('request_food') }}" method="post">
-                    <label for="requested_item">Food Item:</label>
-                    <input type="text" id="requested_item" name="requested_item" required><br>
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" name="location" required><br>
-                    <button type="submit" class="submit-button">Submit Request</button>
-                </form>
-            </div>
+                <div class="form-section">
+                    <h2>Request Food</h2>
+                    <form action="{{ url_for('request_food') }}" method="post">
+                        <label for="requested_item">Food Item:</label>
+                        <input type="text" id="requested_item" name="requested_item" required><br>
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" required><br>
+                        <button type="submit" class="submit-button">Submit Request</button>
+                    </form>
+                </div>
             {% endif %}
         </section>
     </div>
 
     {% if not current_user.is_authenticated %}
-    <div class="form-section" style="text-align: center;">
-        <p>Please <a href="{{ url_for('signup') }}">Sign Up</a> or <a href="{{ url_for('login') }}">Log In</a> to submit donations or requests.</p>
-    </div>
+        <div class="form-section" style="text-align: center;">
+            <p>Please <a href="{{ url_for('signup') }}">Sign Up</a> or <a href="{{ url_for('login') }}">Log In</a> to submit donations or requests.</p>
+        </div>
     {% endif %}
 
     <script>
