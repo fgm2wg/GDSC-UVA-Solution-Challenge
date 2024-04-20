@@ -1,2 +1,5 @@
-# Ignore the instance folder
+# database folder
 instance/
+
+# IDE's project files
+.idea
