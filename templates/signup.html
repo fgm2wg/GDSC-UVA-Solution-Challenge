@@ -17,13 +17,17 @@
         {% endif %}
     {% endwith %}
 
-    <h1>Sign Up</h1>
-    <form action="{{ url_for('signup') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Sign Up</button>
-    </form>
+    <div class="signup-container">
+        <img src="../static/icons/signup_icon.png" alt="Signup Image" class="signup-image">
+        <h1>Sign Up</h1>
+        <form action="{{ url_for('signup') }}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a>.</p>
+    </div>
 </body>
 </html>

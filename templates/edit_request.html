@@ -4,18 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Request</title>
+    <link rel="stylesheet" href="../static/edit_request_styles.css"> 
 </head>
 <body>
-    <h1>Edit Request</h1>
-    <form action="{{ url_for('edit_request', request_id=request_item.id) }}" method="post">
-        <label for="requested_item">Requested Item:</label>
-        <input type="text" id="requested_item" name="requested_item" value="{{ request_item.requested_item }}" required><br>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" value="{{ request_item.location }}" required><br>
-        <button type="submit">Update Request</button>
-    </form>
-    <form action="{{ url_for('delete_request', request_id=request_item.id) }}" method="post">
-        <button type="submit">Delete Request</button>
-    </form>
+    <div class="edit-container">
+        <h1>Edit Request</h1>
+        <form action="{{ url_for('edit_request', request_id=request_item.id) }}" method="post">
+            <label for="requested_item">Requested Item:</label>
+            <input type="text" id="requested_item" name="requested_item" value="{{ request_item.requested_item }}" required><br>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ request_item.location }}" required><br>
+            <button class="update-button" type="submit">Update Request</button> 
+        </form>
+        <form action="{{ url_for('delete_request', request_id=request_item.id) }}" method="post">
+            <button class="delete-button" type="submit">Delete Request</button> 
+        </form>
+    </div>
 </body>
 </html>

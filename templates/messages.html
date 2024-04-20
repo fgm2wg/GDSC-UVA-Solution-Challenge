@@ -9,11 +9,19 @@
 <body>
     <header>
         <h1>Messages</h1>
-        <a href="{{ url_for('index') }}">Home</a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('index') }}">
+                        <img src="../static/icons/home_icon.png" alt="Home Image" class="home-image" title="Home">
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <div class="container">
-        <section class="column">
+        <section class="left-column message-box">
             <h2>Received Messages</h2>
             <ul>
                 {% for message in received_messages %}
@@ -22,7 +30,7 @@
             </ul>
         </section>
 
-        <section class="column">
+        <section class="right-column message-box">
             <h2>Sent Messages</h2>
             <ul>
                 {% for message in sent_messages %}

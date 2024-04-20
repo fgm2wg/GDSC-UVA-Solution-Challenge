@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-y: auto;
-    background-color: #f8f9fa;
+    background-color: #323435;
 }
 
 .header {
@@ -13,42 +13,110 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+}
+
+.header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.header img {
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .header a {
     color: white;
 }
 
-nav ul {
+.header nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
 }
 
-nav ul li {
-    display: inline;
-    margin-right: 20px;
+.header nav ul li {
+    margin-left: 15px;
+}
+
+.messages-image,
+.login-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.logout-image {
+    width: auto;
+    height: 60px;
+    margin-right: -5px;
+    margin-left: -20px;
 }
 
 .container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 20px;
     margin-bottom: 100px;
+    background-color: #757c7f;
 }
 
-.left-column, .right-column {
+.format-box {
+    background-color: #404252;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.format-box ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    flex-grow: 1;
+}
+
+.format-box h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.left-column {
     width: 45%;
+    padding-left: 20px;
+}
+
+.right-column {
+    width: 45%;
+    padding-right: 20px;
 }
 
 .form-section input[type="text"],
 .form-section textarea {
     width: 50%;
     padding: 5px;
-    margin: 5px 5px; 
+    margin: 5px 5px;
     box-sizing: border-box;
     font-size: 16px;
+    background-color: #303030;
+    color: white;
+}
+
+.form-section a {
+    color: #007bff;
+    font-size: 20px;
+}
+
+.form-section p {
+    color: white;
+    font-size: 20px;
 }
 
 .flash-message {
@@ -67,13 +135,6 @@ nav ul li {
     color: white;
 }
 
-.edit-delete {
-    display: inline;
-    vertical-align: center;
-    margin-left: 1px;
-    height: 15px;
-}
-
 .chat-toggle {
     position: fixed;
     bottom: 20px;
@@ -87,7 +148,7 @@ nav ul li {
     border-radius: 25px;
     cursor: pointer;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .chat-toggle:hover {
@@ -101,52 +162,56 @@ nav ul li {
     left: 20px;
     width: 350px;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #565656;
     padding: 20px;
     z-index: 999;
     overflow-y: auto;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background-color: #404252;
+    color: white;
 }
 
 .chat-section h2 {
     margin-top: 0;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
 }
 
 .chat-form label {
-    vertical-align: top; 
-    display: inline-block; 
-    margin-top: 8px; 
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 8px;
 }
 
 .chat-form input[type="text"] {
-    margin-top: 5px; 
+    margin-top: 7px;
+    background-color: #303030;
+    color: white;
 }
 
 .chat-form textarea {
-    margin-top: 5px; 
+    margin-top: 5px;
+    background-color: #303030;
+    color: white;
 }
 
 .chat-form button {
-    margin-top: 5px; 
+    margin-top: 5px;
 }
 
-.donations-list,
-.requests-list {
+.format-list {
     margin-bottom: 50px;
     padding-left: 0;
 }
 
-.donations-list li,
-.requests-list li {
-    margin-bottom: 10px; 
+.format-list li {
+    margin-bottom: 10px;
     line-height: 1.5;
 }
 
 .submit-button {
-    background-color: #0063ff; 
-    color: white; 
+    background-color: #0063ff;
+    color: white;
     border: none;
     padding: 4px 8px;
     border-radius: 4px;
@@ -156,8 +221,8 @@ nav ul li {
 }
 
 .send-button {
-    background-color: #0063ff; 
-    color: white; 
+    background-color: #0063ff;
+    color: white;
     border: none;
     padding: 4px 8px;
     border-radius: 4px;
@@ -165,23 +230,19 @@ nav ul li {
     font-size: 14px;
 }
 
-.edit-button {
-    background-color: #1ab41b; 
-    color: white; 
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-    text-decoration: none;
+.edit-icon,
+.delete-icon {
+    width: 15px;
+    height: 15px;
 }
 
-.delete-button {
-    background-color: #dc3545; 
-    color: white; 
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
+.edit-button:hover,
+.delete-button:hover {
     cursor: pointer;
-    font-size: 12px;
+    filter: brightness(90%);
+}
+
+.side-box {
+    display: inline-block;
+    margin-left: 5px;
 }

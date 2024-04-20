@@ -8,7 +8,7 @@ body, html {
     font-family: 'Roboto', sans-serif;
 }
 
-.login-container {
+.edit-container {
     width: 350px;
     padding: 30px;
     border-radius: 15px;
@@ -19,36 +19,14 @@ body, html {
     align-items: center;
 }
 
-.login-image {
-    width: 100px;
-    height: auto;
-    margin-bottom: 0px;
+.edit-container h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #343a40;
 }
 
 form {
     width: 80%;
-}
-
-.alert {
-    position: absolute;
-    top: calc(21%);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #dc3545;
-    color: white;
-    z-index: 1;
-}
-
-.alert-success {
-    background-color: #28a745;
-    color: white;
-}
-
-.alert-error {
-    background-color: #dc3545;
-    color: white;
 }
 
 form label {
@@ -64,10 +42,23 @@ form input {
     font-size: 16px; 
 }
 
-form button {
+form .update-button { 
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #1ab41b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+form .delete-button { 
+    width: 100%;
+    padding: 10px;
+    background-color: #dc3545; 
     color: white;
     border: none;
     border-radius: 5px;
